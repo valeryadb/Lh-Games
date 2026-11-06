@@ -1,0 +1,4 @@
+/* Espaço no fim da página para o conteúdo não ficar escondido atrás do rodapé fixo */
+body {
+  padding-bottom: 80px;
+}

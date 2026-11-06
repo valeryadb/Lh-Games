@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Lista de Produtos</h2>
+    <a routerLink="/cadastro-produto" class="btn btn-success">+ Novo Produto</a>
+  </div>
+
+  <div *ngIf="erro" class="alert alert-danger">
+    Não foi possível carregar os produtos. Verifique se o JSON-server está rodando
+    (<code>npm run api</code>).
+  </div>
+
+  <table class="table table-bordered align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Imagem</th>
+        <th>Produto</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produto of produtos">
+        <td>{{ produto.id }}</td>
+        <td>
+          <img [src]="'assets/imagens/' + produto.foto" alt="{{ produto.produto }}" width="60" height="60"
+               (error)="imagemPadrao($event)">
+        </td>
+        <td>{{ produto.produto }}</td>
+        <td>{{ produto.descricao }}</td>
+        <td>{{ produto.preco | currency:'BRL' }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm me-2" (click)="editarProduto(produto.id!)">Editar</button>
+          <button class="btn btn-danger btn-sm" (click)="excluirProduto(produto.id!)">Excluir</button>
+        </td>
+      </tr>
+      <tr *ngIf="produtos.length === 0 && !erro">
+        <td colspan="6" class="text-center text-muted">Nenhum produto cadastrado.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

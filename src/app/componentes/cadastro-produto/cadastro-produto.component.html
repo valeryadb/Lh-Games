@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <h2>{{ produto.id ? 'Editar Produto' : 'Cadastrar Produto' }}</h2>
+
+  <div class="row">
+    <div class="col-md-8">
+      <form #form="ngForm" (ngSubmit)="salvarProduto()">
+        <div class="mb-3">
+          <label class="form-label" for="produto">Nome do Produto</label>
+          <input id="produto" type="text" class="form-control" [(ngModel)]="produto.produto" name="produto" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="descricao">Descrição</label>
+          <textarea id="descricao" class="form-control" [(ngModel)]="produto.descricao" name="descricao" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="foto">Foto (Nome do Arquivo)</label>
+          <input id="foto" type="text" class="form-control" [(ngModel)]="produto.foto" name="foto"
+                 placeholder="ex.: jogo1.PNG" required>
+          <div class="form-text">A imagem deve estar na pasta <code>public/assets/imagens</code>.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="preco">Preço</label>
+          <input id="preco" type="number" class="form-control" [(ngModel)]="produto.preco" name="preco"
+                 min="0" step="0.01" required>
+        </div>
+
+        <button type="submit" class="btn btn-success me-2" [disabled]="form.invalid">
+          {{ produto.id ? 'Atualizar' : 'Cadastrar' }}
+        </button>
+        <a routerLink="/painel-principal" class="btn btn-secondary">Cancelar</a>
+      </form>
+    </div>
+
+    <!-- Pré-visualização da imagem do produto -->
+    <div class="col-md-4 text-center mt-4 mt-md-0" *ngIf="produto.foto">
+      <p class="text-muted mb-2">Pré-visualização</p>
+      <img [src]="'assets/imagens/' + produto.foto" [alt]="produto.produto"
+           class="img-thumbnail" width="200" height="200" (error)="imagemPadrao($event)">
+    </div>
+  </div>
+</div>
